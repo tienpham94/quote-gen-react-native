@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View, Button } from "react-native";
+import { Font } from "expo";
 
 const quotes = [
   {
@@ -29,8 +30,20 @@ const quotes = [
 
 export default class App extends React.Component {
   state = {
-    activeQuoteIndex: 0
+    activeQuoteIndex: 0,
+    isFontLoaded: false
   };
+
+  componentDidMount() {
+    Font.loadAsync({
+      Average: require("./assets/fonts/Average-Regular.ttf"),
+      Prata: require("./assets/fonts/Prata-Regular.ttf")
+    }).then(() => {
+      this.setState({
+        isFontLoaded: true
+      });
+    });
+  }
 
   nextQuote = () => {
     const { activeQuoteIndex } = this.state;
@@ -44,16 +57,24 @@ export default class App extends React.Component {
         activeQuoteIndex: 0
       });
     }
-  }
+  };
 
   render() {
     const activeQuote = quotes[this.state.activeQuoteIndex];
+    const { isFontLoaded } = this.state;
     return (
       <View style={styles.container}>
-        <Text style={styles.message}>{activeQuote.message}</Text>
-        <Text style={styles.author}>{activeQuote.author}</Text>
+        <Text style={[styles.message, isFontLoaded && { fontFamily: "Prata" }]}>
+          {activeQuote.message}
+        </Text>
+        <Text
+          style={[styles.author, isFontLoaded && { fontFamily: "Average" }]}
+        >
+          {activeQuote.author}
+        </Text>
+
         <View style={styles.button}>
-          <Button title={"Next Quote"} onPress={() => {}} />
+          <Button title={"Next quote"} onPress={this.nextQuote} />
         </View>
       </View>
     );
