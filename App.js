@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View , Button} from "react-native";
+import { StyleSheet, Text, View, Button } from "react-native";
 
 const quotes = [
   {
@@ -32,12 +32,29 @@ export default class App extends React.Component {
     activeQuoteIndex: 0
   };
 
+  nextQuote = () => {
+    const { activeQuoteIndex } = this.state;
+
+    if (activeQuoteIndex < quotes.length - 2) {
+      this.setState({
+        activeQuoteIndex: activeQuoteIndex + 1
+      });
+    } else {
+      this.setState({
+        activeQuoteIndex: 0
+      });
+    }
+  }
+
   render() {
     const activeQuote = quotes[this.state.activeQuoteIndex];
     return (
       <View style={styles.container}>
         <Text style={styles.message}>{activeQuote.message}</Text>
         <Text style={styles.author}>{activeQuote.author}</Text>
+        <View style={styles.button}>
+          <Button title={"Next Quote"} onPress={() => {}} />
+        </View>
       </View>
     );
   }
@@ -57,5 +74,9 @@ const styles = StyleSheet.create({
   },
   author: {
     fontSize: 18
+  },
+  button: {
+    position: "absolute",
+    bottom: 40
   }
 });
