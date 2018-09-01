@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View , Button} from "react-native";
 
 const quotes = [
   {
@@ -28,12 +28,16 @@ const quotes = [
 ];
 
 export default class App extends React.Component {
+  state = {
+    activeQuoteIndex: 0
+  };
+
   render() {
+    const activeQuote = quotes[this.state.activeQuoteIndex];
     return (
       <View style={styles.container}>
-        <Text>Misa App.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
-        <Text>Tien app 2</Text>
+        <Text style={styles.message}>{activeQuote.message}</Text>
+        <Text style={styles.author}>{activeQuote.author}</Text>
       </View>
     );
   }
@@ -44,6 +48,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    paddingHorizontal: 30
+  },
+  message: {
+    fontSize: 24,
+    marginBottom: 20
+  },
+  author: {
+    fontSize: 18
   }
 });
